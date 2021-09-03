@@ -54,6 +54,7 @@ class PetitionController extends Controller
         if (!Auth::check()) {
             return redirect('/login');
         } else {
+            //Validation
             $request->validate([
                 'title' => 'required'
             ]);
@@ -83,7 +84,7 @@ class PetitionController extends Controller
     public function show(Petition $petition)
     {
         //
-        dd($petition);
+        return view('petitions.show', ['petition' => $petition]);
     }
 
     /**
@@ -114,8 +115,20 @@ class PetitionController extends Controller
      */
     public function update(Request $request, Petition $petition)
     {
-        //
-        dd($petition);
+        // Check if the user has loggied in
+        if (!Auth::check()) {
+            return redirect('/login');
+        } else {
+            //Validation
+            $request->validate([
+                'title' => 'required'
+            ]);
+
+            $petition->title = $request->input('title');
+            $petition->description = $request->input('description');
+        }
+
+        return redirect()->route('petition.show', ['petition' => $petition]);
     }
 
     /**
