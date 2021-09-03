@@ -45,6 +45,18 @@
                 Submit
             </button>
             </form>
+
+            {{-- Delete Petition --}}
+            {{-- TODO: Add alert --}}
+            @if (isset($petition))
+                <form action="{{ route('petition.destroy', ['petition' => $petition]) }}" method="post">
+                    @csrf
+                    @method('DELETE')
+                    <button class="btn btn-danger btn-block mt-3">
+                        Delete this Petition
+                    </button>
+                </form>
+            @endif
         </div>
     </div>
 </div>

@@ -15,8 +15,8 @@ class AddForeignKeyToPetitionUsers extends Migration
     {
         Schema::table('petition_users', function (Blueprint $table) {
             //
-            $table->foreign('petitionID')->references('id')->on('petition');
-            $table->foreign('userID')->references('id')->on('users');
+            $table->foreign('petitionID')->references('id')->on('petition')->onDelete('cascade');
+            $table->foreign('userID')->references('id')->on('users')->onDelete('cascade');
         });
     }
 

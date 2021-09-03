@@ -139,7 +139,13 @@ class PetitionController extends Controller
      */
     public function destroy(Petition $petition)
     {
-        //
+        // Check if the user has loggied in
+        if (!Auth::check()) {
+            return redirect('/login');
+        } else {
+            $petition->delete();
+            return redirect()->route('home');
+        }
     }
 
     public function sign(Petition $petition)
