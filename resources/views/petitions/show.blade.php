@@ -16,8 +16,8 @@
     <strong>Signers:</strong>
     <p id="signers">
         @forelse ($petition->signers as $signer)
-            {{ $loop->first?'':', ' }}
-            {{ $signer->name }}
+            {{-- If not printing the last one, add a comma behind it --}}
+            {{ $signer->name.($loop->last?'':', ') }}
         @empty
             No signer for the moment.
         @endforelse
@@ -29,10 +29,13 @@
     @if ($petition->signers->contains(Auth::user()))
         <p>You already signed this petition.</p>
     @else
-        <a href="{{ route('petition.sign', ['petition' => $petition]) }}"
-            class="btn btn-primary btn-block btn-lg">
-            Sign Now
-        </a>
+        <form action="{{ route('petition.sign', ['petition' => $petition]) }}" method="POST">
+            @csrf
+            {{ method_field('PUT') }}
+            <button class="btn btn-primary btn-block btn-lg mb-3">
+                Sign Now
+            </button>
+        </form>
     @endif
     {{-- Edit --}}
     @if ($petition->creator == Auth::user())

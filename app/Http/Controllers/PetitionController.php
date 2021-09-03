@@ -144,6 +144,12 @@ class PetitionController extends Controller
 
     public function sign(Petition $petition)
     {
-        
+        // Check if the user has loggied in
+        if (!Auth::check()) {
+            return redirect('/login');
+        } else {
+            $petition->signers()->attach(Auth::id());
+        }
+        return redirect()->route('petition.show', ['petition' => $petition]);
     }
 }
