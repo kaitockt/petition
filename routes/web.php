@@ -1,7 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
+use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\PetitionController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -14,7 +15,8 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    //if logged in, return home; Otherwise, redirect to login page.
+    return Auth::check()?redirect('/home'):redirect('/login');
 });
 
 Auth::routes();
@@ -24,3 +26,7 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+Route::resource('/petition', PetitionController::class);
+// Sign
+Route::put('petition/{petition}/sign', [PetitionController::class, 'sign'])->name('petition.sign');

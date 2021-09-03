@@ -1,8 +1,8 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container justify-content-center">
-    <h1 class="text-center">All Petitions</h1>
+<div class="container">
+    <h1 class="text-center">My Petitions</h1>
     <div id="accordion">
         @forelse($petitions as $petition)
         {{-- <a class="list-group-item list-group-item-action"
@@ -18,25 +18,24 @@
             <div id="collapse{{ $petition->id }}" class="collapse" data-parent="#accordion">
                 <div class="card-body">
                     <p>{{ $petition->description }}</p>
+                    <p id="signers">Number of Signers: {{ count($petition->signers) }}</p>
                     <div class="d-flex justify-content-between">
-                        <p id="signers">Number of Signers: {{ count($petition->signers) }}</p>
-                        <p id="created-at">Created At: {{ $petition->created_at }}</p>
-                    </div>
-                    
-                    <div class="d-flex justify-content-between">
-                        {{-- One-Click Sign --}}
-                        <form action="{{ route('petition.sign', ['petition' => $petition]) }}" method="POST">
+                        {{-- Edit --}}
+                        <a href="{{ route('petition.edit', ['petition' => $petition->id]) }}"
+                            class="btn btn-primary">
+                            Edit
+                        </a>
+
+                        {{-- Delete --}}
+                        {{-- TODO: Add Warning --}}
+                        <form action="{{ route('petition.destroy', ['petition' => $petition->id]) }}" method="POST">
                             @csrf
-                            {{ method_field('PUT') }}
-                            <button class="btn btn-success">
-                                Sign Now
+                            {{ method_field('DELETE') }}
+                            <button class="btn btn-danger">
+                                Delete
                             </button>
                         </form>
-                        {{-- Show Details --}}
-                        <a href="{{ route('petition.show', ['petition' => $petition]) }}"
-                            class="btn btn-primary">
-                            Details
-                        </a>
+                        
                     </div>
                 </div>
             </div>

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Petition;
 
 class HomeController extends Controller
 {
@@ -23,6 +24,9 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $petitions = Petition::orderByDesc('created_at')->get();
+        return view('home', [
+            'petitions' => $petitions,
+        ]);
     }
 }
