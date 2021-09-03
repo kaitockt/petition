@@ -25,13 +25,17 @@
                     
                     <div class="d-flex justify-content-between">
                         {{-- One-Click Sign --}}
-                        <form action="{{ route('petition.sign', ['petition' => $petition]) }}" method="POST">
-                            @csrf
-                            {{ method_field('PUT') }}
-                            <button class="btn btn-success">
-                                Sign Now
-                            </button>
-                        </form>
+                        @if ($petition->signers->contains(Auth::user()))
+                            <p>You signed this petition.</p>
+                        @else
+                            <form action="{{ route('petition.sign', ['petition' => $petition]) }}" method="POST">
+                                @csrf
+                                {{ method_field('PUT') }}
+                                <button class="btn btn-success">
+                                    Sign Now
+                                </button>
+                            </form>
+                        @endif
                         {{-- Show Details --}}
                         <a href="{{ route('petition.show', ['petition' => $petition]) }}"
                             class="btn btn-primary">
