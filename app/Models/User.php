@@ -40,4 +40,17 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function createdPetitions(){
+        return $this->hasMany(Petition::class, 'created_by');
+    }
+
+    public function signedPetitions(){
+        return $this->belongsToMany(
+            Petition::class,
+            'petition_users',
+            'userID',
+            'petitionID'
+        );
+    }
 }

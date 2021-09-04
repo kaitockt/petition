@@ -27,11 +27,10 @@
                         </a>
 
                         {{-- Delete --}}
-                        {{-- TODO: Add Warning --}}
-                        <form action="{{ route('petition.destroy', ['petition' => $petition->id]) }}" method="POST">
+                        <form action="{{ route('petition.destroy', ['petition' => $petition->id]) }}" method="POST" id="delete">
                             @csrf
                             {{ method_field('DELETE') }}
-                            <button class="btn btn-danger">
+                            <button type="button" class="btn btn-danger">
                                 Delete
                             </button>
                         </form>

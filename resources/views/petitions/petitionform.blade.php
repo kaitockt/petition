@@ -41,18 +41,17 @@
             <textarea class="form-control" rows="5" id="description" placeholder="Add a description..." name="description"
             >@if (isset($petition->description)){{ $petition->description }}@endif</textarea>
 
-            <button class="btn btn-primary btn-block mt-3">
+            <button class="btn btn-primary btn-block mt-3 btn-lg">
                 Submit
             </button>
             </form>
 
             {{-- Delete Petition --}}
-            {{-- TODO: Add alert --}}
             @if (isset($petition))
                 <form action="{{ route('petition.destroy', ['petition' => $petition]) }}" method="post">
                     @csrf
                     @method('DELETE')
-                    <button class="btn btn-danger btn-block mt-3">
+                    <button class="btn btn-danger btn-block mt-3 btn-lg" type="button">
                         Delete this Petition
                     </button>
                 </form>
