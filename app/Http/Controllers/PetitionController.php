@@ -124,8 +124,12 @@ class PetitionController extends Controller
                 'title' => 'required'
             ]);
 
-            $petition->title = $request->input('title');
-            $petition->description = $request->input('description');
+            // $petition->title = $request->input('title');
+            // $petition->description = $request->input('description');
+            $petition->update([
+                'title' => $request->input('title'),
+                'description' => $request->input('description')
+            ]);
         }
 
         return redirect()->route('petition.show', ['petition' => $petition]);
